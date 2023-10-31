@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+
 
 # Load the Penguin and Abalone dataset
 penguin_data = pd.read_csv('/Users/lcsanchez/PycharmProjects/ExperimentsMachineLearning/penguins.csv')
@@ -76,3 +79,32 @@ img.save('abalone-classes.gif', format='GIF')
 
 plt.show()
 
+# 3. Split the dataset using train test split using the default parameter values.
+# Split the dataset into features (X) and target variable (y)
+X = penguin_data[['island', 'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']]
+y = penguin_data['species']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+
+print(X_train, X_test, y_train, y_test)
+
+# 4. Train and test 4 different classifiers:
+# (a) Base-DT: a Decision Tree with the default parameters. Show the decision tree graphically (for the
+# abalone dataset, you can restrict the tree depth for visualisation purposes)
+
+# Create a Decision Tree Classifier with default parameters
+base_dt_classifier = DecisionTreeClassifier(random_state=42)
+# Specify max_depth for visualizing the tree
+
+# Train the classifier on the training data
+base_dt_classifier.fit(X_train, y_train)
+
+# Test the classifier on the testing data
+accuracy_base_dt = base_dt_classifier.score(X_test, y_test)
+print("The accuracy of Base-DT classification is:", accuracy_base_dt)
+
+# Visualize the Decision Tree graphically
+plt.figure(figsize=(12, 8))
+plot_tree(base_dt_classifier, filled=True, feature_names=X.columns, class_names=base_dt_classifier.classes_)
+plt.title("Base-DT Classifier")
+plt.show()
