@@ -7,8 +7,8 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 
 # Load the Penguin and Abalone dataset
-penguin_data = pd.read_csv('/Users/lcsanchez/PycharmProjects/ExperimentsMachineLearning/penguins.csv')
-abalone_data = pd.read_csv('/Users/lcsanchez/PycharmProjects/ExperimentsMachineLearning/abalone.csv')
+penguin_data = pd.read_csv('./penguins.csv')
+abalone_data = pd.read_csv('./abalone.csv')
 
 # 1a:
 # Method 1: Convert 'island' and 'sex' features into 1-hot vectors (dummy-coded data)
