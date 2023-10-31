@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from PIL import Image
 from sklearn.preprocessing import OneHotEncoder
 
 # Load the Penguin and Abalone dataset
@@ -30,3 +32,47 @@ penguin_data['sex'] = penguin_data['sex'].map(sex_mapping)
 # As all the columns are float or integer type, we can use Abalone as it is
 abalone_data_types = abalone_data.dtypes
 print(abalone_data_types)
+
+
+# 2: Plot the percentage of the instances in each output class and store the graphic in a file called penguin-classes.gif
+
+# Assuming the target in 'penguin_data' is 'species'
+class_counts = penguin_data['species'].value_counts(normalize=True) * 100
+
+plt.figure(figsize=(8, 6))
+class_counts.plot(kind='bar', color='skyblue')
+plt.xlabel('Species')
+plt.ylabel('Percentage of Instances')
+plt.title('Percentage of Instances in Each Species (Penguin Dataset)')
+plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better visibility
+plt.tight_layout()
+
+# Save the plot as a PNG file
+plt.savefig('penguin-classes.png')
+
+# Convert the PNG file to GIF using Pillow
+img = Image.open('penguin-classes.png')
+img.save('penguin-classes.gif', format='GIF')
+
+plt.show()
+
+# Assuming the target in 'abalone_data' is 'Type'
+class_counts = abalone_data['Type'].value_counts(normalize=True) * 100
+
+plt.figure(figsize=(8, 6))
+class_counts.plot(kind='bar', color='lavender')
+plt.xlabel('Type')
+plt.ylabel('Percentage of Instances')
+plt.title('Percentage of Instances in Each Type (Abalone Dataset)')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+
+# Save the plot as a PNG file
+plt.savefig('abalone-classes.png')
+
+# Convert the PNG file to GIF using Pillow
+img = Image.open('abalone-classes.png')
+img.save('abalone-classes.gif', format='GIF')
+
+plt.show()
+
