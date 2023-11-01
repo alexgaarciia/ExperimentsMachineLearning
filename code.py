@@ -35,7 +35,7 @@ def models_run(X, y):
     #Top_DT (b)
     param_grid = {
         'criterion': ['gini', 'entropy'],
-        'max_depth': [2, 5, None],
+        'max_depth': [5, 10, None],
         'min_samples_split': [2, 5, 10]
     }
 
