@@ -84,3 +84,10 @@ X = penguin_data[['island', 'culmen_length_mm', 'culmen_depth_mm', 'flipper_leng
 y = penguin_data['species']
 
 models_run(X, y)  # run models for Pengins data
+
+type_mapping = {'F': 0, 'M': 1, 'I': 2}
+X_abalone = abalone_data[['LongestShell', 'Diameter', 'Height', 'WholeWeight', 'ShuckedWeight', 'VisceraWeight', 'ShellWeight', 'Rings']]
+y_abalone = abalone_data['Type'].map(type_mapping)
+
+models_run(X_abalone, y_abalone)
+
