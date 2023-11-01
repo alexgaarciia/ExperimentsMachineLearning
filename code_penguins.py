@@ -5,7 +5,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import GridSearchCV
-
+from sklearn.neural_network import MLPClassifier
 
 # Load the Penguin and Abalone dataset
 penguin_data = pd.read_csv('./penguins.csv')
@@ -26,7 +26,7 @@ penguin_data_encoded_1hot.drop(['island', 'sex'], axis=1, inplace=True)
 
 # Method 2: Convert 'island' and 'sex' features into categories manually
 island_mapping = {'Biscoe': 0, 'Dream': 1, 'Torgersen': 2}
-sex_mapping = {'Female': 0, 'Male': 1}
+sex_mapping = {'FEMALE': 0, 'MALE': 1}
 # These dictionaries serve as lookup tables where the keys represent the original ones but formatted
 penguin_data['island'] = penguin_data['island'].map(island_mapping)
 penguin_data['sex'] = penguin_data['sex'].map(sex_mapping)
@@ -110,6 +110,8 @@ plot_tree(base_dt_classifier, filled=True, feature_names=X.columns, class_names=
 plt.title("Base-DT Classifier")
 plt.show()
 
+# Simon Starts Writting code like a maniac with no comments what so ever >>> fully autistic mode
+#Top_DT (b)
 param_grid = {
     'criterion': ['gini', 'entropy'],
     'max_depth': [2, 5, None],
@@ -117,19 +119,44 @@ param_grid = {
 }
 
 default_dt_classifier = DecisionTreeClassifier()
-grid_search = GridSearchCV(default_dt_classifier, param_grid, cv=5)
+grid_search_DT = GridSearchCV(default_dt_classifier, param_grid)
 
-grid_search.fit(X_train, y_train)
+grid_search_DT.fit(X_train, y_train)
 
-top_dt_best_param = grid_search.best_params_
-top_dt_classifier = grid_search.best_estimator_
+top_dt_best_param = grid_search_DT.best_params_
+top_dt_classifier = grid_search_DT.best_estimator_
 
-accuracy_top_dt = top_dt_classifier.score(X_test, y_test)
 print("The best parameters of Top-DT classification is:", top_dt_best_param)
-print("The accuracy of Top-DT classification is:", accuracy_top_dt)
+print("The accuracy of Top-DT classification is:", top_dt_classifier.score(X_test, y_test))
 
 # Visualize the Decision Tree graphically
 plt.figure(figsize=(12, 8))
 plot_tree(top_dt_classifier, filled=True, feature_names=X.columns, class_names=top_dt_classifier.classes_)
 plt.title("Top-DT Classifier")
 plt.show()
+
+# Base_MLP (c)
+base_MLP = MLPClassifier(hidden_layer_sizes=(100, 100), activation='logistic', solver='sgd')
+
+base_MLP.fit(X_train, y_train)
+
+print("The accuracy of Base_MLP classification is:", base_MLP.score(X_test, y_test))
+
+# Top_MLP (c)
+param_grid = {
+    'activation': ['logistic', 'tanh', 'relu'],
+    'hidden_layer_sizes': [(100, 100), (10, 10, 10), (30, 50)],
+    'solver': ['adam', 'sgd']
+}
+
+default_MLP = MLPClassifier(max_iter=1000)
+grid_search_MLP = GridSearchCV(default_MLP, param_grid)
+
+grid_search_MLP.fit(X_train, y_train)
+
+top_mlp_best_param = grid_search_MLP.best_params_
+top_mlp_classifier = grid_search_MLP.best_estimator_
+
+print("The best parameters of Top-MLP classification is:", top_mlp_best_param)
+print("The accuracy of Top-MLP classification is:", top_mlp_classifier.score(X_test, y_test))
+
