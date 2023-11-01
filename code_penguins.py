@@ -4,6 +4,7 @@ from PIL import Image
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.model_selection import GridSearchCV
 
 
 # Load the Penguin and Abalone dataset
@@ -107,4 +108,28 @@ print("The accuracy of Base-DT classification is:", accuracy_base_dt)
 plt.figure(figsize=(12, 8))
 plot_tree(base_dt_classifier, filled=True, feature_names=X.columns, class_names=base_dt_classifier.classes_)
 plt.title("Base-DT Classifier")
+plt.show()
+
+param_grid = {
+    'criterion': ['gini', 'entropy'],
+    'max_depth': [2, 5, None],
+    'min_samples_split': [2, 5, 10]
+}
+
+default_dt_classifier = DecisionTreeClassifier()
+grid_search = GridSearchCV(default_dt_classifier, param_grid, cv=5)
+
+grid_search.fit(X_train, y_train)
+
+top_dt_best_param = grid_search.best_params_
+top_dt_classifier = grid_search.best_estimator_
+
+accuracy_top_dt = top_dt_classifier.score(X_test, y_test)
+print("The best parameters of Top-DT classification is:", top_dt_best_param)
+print("The accuracy of Top-DT classification is:", accuracy_top_dt)
+
+# Visualize the Decision Tree graphically
+plt.figure(figsize=(12, 8))
+plot_tree(top_dt_classifier, filled=True, feature_names=X.columns, class_names=top_dt_classifier.classes_)
+plt.title("Top-DT Classifier")
 plt.show()
