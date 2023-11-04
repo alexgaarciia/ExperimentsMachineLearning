@@ -63,7 +63,7 @@ def models_run(X, y):
 
     print("The accuracy of Base_MLP classification is:", base_MLP.score(X_test, y_test))
 
-    # Top_MLP (c)
+    # Top_MLP (d)
     param_grid = {
         'activation': ['logistic', 'tanh', 'relu'],
         'hidden_layer_sizes': [(100, 100), (10, 10, 10), (30, 50)],
