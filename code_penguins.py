@@ -1,43 +1,78 @@
+# Import necessary libraries/modules
+import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
 from sklearn.preprocessing import OneHotEncoder
-
 from code import models_run
+
+
+# Define class needed to store information from the output
+class FileOutput:
+    def __init__(self, file_name):
+        self.file = open(file_name, 'w')
+        self.stdout = sys.stdout
+        sys.stdout = self
+        self.suppress_output = False  # New flag to control output
+
+    def write(self, text):
+        if not self.suppress_output:
+            self.file.write(text)
+            self.stdout.write(text)
+
+    def flush(self):
+        if not self.suppress_output:
+            self.file.flush()
+            self.stdout.flush()
+
+    def close(self):
+        sys.stdout = self.stdout
+        self.file.close()
+
 
 # Load the Penguin and Abalone dataset
 penguin_data = pd.read_csv('./penguins.csv')
 abalone_data = pd.read_csv('./abalone.csv')
 
-# 1a:
-# Method 1: Convert 'island' and 'sex' features into 1-hot vectors (dummy-coded data)
+
+########################################################################################################################
+# EXERCISE 1
+########################################################################################################################
+# 1A) METHOD 1: Convert 'island' and 'sex' features into 1-hot vectors (dummy-coded data)
 # Drop first category to avoid the 'dummy variable trap'
 encoder = OneHotEncoder(sparse_output=False, drop='first')
+
 # The fit_transform method fits the encoder to the specified columns and transforms the data simultaneously.
 encoded_island_sex = encoder.fit_transform(penguin_data[['island', 'sex']])
+
 # The resulting sparse matrix is transformed to a DataFrame
 encoded_feature_names = encoder.get_feature_names_out(['island', 'sex'])
 encoded_df = pd.DataFrame(encoded_island_sex, columns=encoded_feature_names)
+
 # Add the one-hot transformed columns to the original data and drop the original 'sex' and 'penguin' columns
 penguin_data_encoded_1hot = pd.concat([penguin_data, encoded_df], axis=1)
 penguin_data_encoded_1hot.drop(['island', 'sex'], axis=1, inplace=True)
 
-# Method 2: Convert 'island' and 'sex' features into categories manually
+
+# 1A) METHOD 2: Convert 'island' and 'sex' features into categories manually
+# These dictionaries serve as lookup tables where the keys represent the original ones but formatted
 island_mapping = {'Biscoe': 0, 'Dream': 1, 'Torgersen': 2}
 sex_mapping = {'FEMALE': 0, 'MALE': 1}
-# These dictionaries serve as lookup tables where the keys represent the original ones but formatted
+
+# Now, penguin_data contains 'island' and 'sex' features in numerical format based on manual categorization.
 penguin_data['island'] = penguin_data['island'].map(island_mapping)
 penguin_data['sex'] = penguin_data['sex'].map(sex_mapping)
-# Now, penguin_data contains 'island' and 'sex' features in numerical format based on manual categorization.
 
-# 1b: Determine if the Abalone dataset can be used as is; otherwise convert any features using the 2 methods above
-# As all the columns are float or integer type, we can use Abalone as it is
+
+# 1B)
 abalone_data_types = abalone_data.dtypes
 print(abalone_data_types)
 
 
-# 2: Plot the percentage of the instances in each output class and store the graphic in a file called penguin-classes.gif
-
+########################################################################################################################
+# EXERCISE 2
+########################################################################################################################
+# PENGUIN DATASET:
 # Assuming the target in 'penguin_data' is 'species'
 class_counts = penguin_data['species'].value_counts(normalize=True) * 100
 
@@ -56,8 +91,11 @@ plt.savefig('penguin-classes.png')
 img = Image.open('penguin-classes.png')
 img.save('penguin-classes.gif', format='GIF')
 
+# Show the graph
 plt.show()
 
+
+# ABALONE DATASET:
 # Assuming the target in 'abalone_data' is 'Type'
 class_counts = abalone_data['Type'].value_counts(normalize=True) * 100
 
@@ -76,17 +114,29 @@ plt.savefig('abalone-classes.png')
 img = Image.open('abalone-classes.png')
 img.save('abalone-classes.gif', format='GIF')
 
+# Show the graph
 plt.show()
 
-# 3. Split the dataset using train test split using the default parameter values.
+
+########################################################################################################################
+# EXERCISE 3
+########################################################################################################################
+# PENGUIN DATASET:
 # Split the dataset into features (X) and target variable (y)
 X = penguin_data[['island', 'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']]
 y = penguin_data['species']
 
-# models_run(X, y)  # run models for Pengins data
+# Run the model
+penguin_file = FileOutput('penguin-performance.txt')
+models_run(X, y)
+penguin_file.close()
 
+
+# ABALONE DATASET:
 X_abalone = abalone_data[['LongestShell', 'Diameter', 'Height', 'WholeWeight', 'ShuckedWeight', 'VisceraWeight', 'ShellWeight', 'Rings']]
 y_abalone = abalone_data['Type']
 
+# Run the model:
+abalone_file = FileOutput('abalone-performance.txt')
 models_run(X_abalone, y_abalone)
-
+abalone_file.close()
