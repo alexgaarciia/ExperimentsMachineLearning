@@ -3,8 +3,9 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
-from sklearn.preprocessing import OneHotEncoder
 from code import models_run
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
 
 
 # Define class needed to store information from the output
@@ -123,20 +124,40 @@ plt.show()
 ########################################################################################################################
 # PENGUIN DATASET:
 # Split the dataset into features (X) and target variable (y)
-X = penguin_data[['island', 'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']]
-y = penguin_data['species']
-
-# Run the model
-penguin_file = FileOutput('penguin-performance.txt')
-models_run(X, y)
-penguin_file.close()
-
+X_penguin = penguin_data[['island', 'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']]
+y_penguin = penguin_data['species']
+X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin = train_test_split(X_penguin, y_penguin)
 
 # ABALONE DATASET:
 X_abalone = abalone_data[['LongestShell', 'Diameter', 'Height', 'WholeWeight', 'ShuckedWeight', 'VisceraWeight', 'ShellWeight', 'Rings']]
 y_abalone = abalone_data['Type']
+X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone = train_test_split(X_abalone, y_abalone)
 
-# Run the model:
-abalone_file = FileOutput('abalone-performance.txt')
-models_run(X_abalone, y_abalone)
-abalone_file.close()
+
+########################################################################################################################
+# EXERCISE 4, 5
+########################################################################################################################
+# Run the model for the penguin dataset:
+penguin_file = FileOutput('penguin-performance.txt')
+models_run(1, X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+penguin_file.close()
+
+# Run the model for the abalone dataset:
+#abalone_file = FileOutput('abalone-performance.txt')
+#models_run(1, X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+#abalone_file.close()
+
+
+########################################################################################################################
+# EXERCISE 6
+########################################################################################################################
+# Run the model for the penguin dataset:
+penguin_file_ex6 = FileOutput('penguin-performance-5times.txt')
+models_run(5, X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+penguin_file_ex6.close()
+
+# Run the model for the abalone dataset:
+#abalone_file_ex6 = FileOutput('abalone-performance-5times.txt')
+#models_run(5, X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+#abalone_file_ex6.close()
+
