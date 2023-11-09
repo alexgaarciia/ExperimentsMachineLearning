@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
-from code import base_dt, top_dt, base_mlp, top_mlp, compute_metrics, print_info, print_info2, evaluate_models
+from functions import base_dt, top_dt, base_mlp, top_mlp, compute_metrics, print_info, print_info2, evaluate_models
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 
