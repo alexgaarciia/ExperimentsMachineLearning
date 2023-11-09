@@ -126,26 +126,28 @@ performance.
 We will also consider that this is a classification task.
 The metrics are the following:
 
-ACCURACY: Accuracy is the most straightforward metric,
-but it can be misleading, especially for imbalanced datasets.
+1. ACCURACY: Accuracy is the most straightforward metric,
+but it can be misleading, it usually works well for balanced datasets (it would work for the 'abalone' dataset).
 It calculates the ratio of correctly predicted instances to the total instances.
 It's suitable for balanced datasets where classes have similar proportions.
 - Formula: No. of correct predictions / Total no. of observations
 
-PRECISION: Precision focuses on the ratio of correctly predicted positive observations to the total predicted
+- The next evaluation metrics work better if one class is more
+important than others (the case in 'penguins' dataset)
+1. PRECISION: Precision focuses on the ratio of correctly predicted positive observations to the total predicted
 positive observations. It is suitable when the cost of false positives is high.
 - Formula: TP/(TP + FP)
 
-RECALL (Sensitivity or True Positive Rate): Recall calculates the ratio of correctly
+2. RECALL (Sensitivity or True Positive Rate): Recall calculates the ratio of correctly
 predicted positive observations to all the actual positives. It is suitable when the cost
 of false negatives is high.
 - Formula: TP/(TP + FN)
 
-ROC-AUC (Receiver Operating Characteristic - Area Under Curve): ROC-AUC measures the area under the ROC curve,
+3. ROC-AUC (Receiver Operating Characteristic - Area Under Curve): ROC-AUC measures the area under the ROC curve,
 which represents the true positive rate against the false positive rate. It is suitable for binary classification
 tasks, especially when dealing with imbalanced datasets.
 
-F1-Score: F1-score is the harmonic mean of precision and recall. It is a balance between precision and recall
+4. F1-Score: F1-score is the harmonic mean of precision and recall. It is a balance between precision and recall
 and is suitable when there is an uneven class distribution.
 - Formula: F1 − Score = 2 × (Precision+Recall)/(Precision×Recall)
 
