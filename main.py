@@ -118,7 +118,20 @@ img.save('abalone-classes.gif', format='GIF')
 # Show the graph
 plt.show()
 
+"""
+Which metric is more appropriate to use to evaluate the performance?
 
+ACCURACY: Accuracy is the most straightforward metric,
+but it can be misleading, especially for imbalanced datasets.
+It calculates the ratio of correctly predicted instances to the total instances.
+It's suitable for balanced datasets where classes have similar proportions.
+
+PRECISION: Precision focuses on the ratio of correctly predicted positive observations to the total predicted
+positive observations. It is suitable when the cost of false positives is high.
+
+
+
+"""
 ########################################################################################################################
 # EXERCISE 3
 ########################################################################################################################
