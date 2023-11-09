@@ -138,7 +138,9 @@ ROC-AUC (Receiver Operating Characteristic - Area Under Curve): ROC-AUC measures
 which represents the true positive rate against the false positive rate. It is suitable for binary classification
 tasks, especially when dealing with imbalanced datasets.
 
-
+F1-Score: F1-score is the harmonic mean of precision and recall. It is a balance between precision and recall
+and is suitable when there is an uneven class distribution.
+- Formula: F1 − Score = 2 × (Precision+Recall)/(Precision×Recall)
 
 """
 ########################################################################################################################
