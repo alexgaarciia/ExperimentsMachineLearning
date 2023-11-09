@@ -119,10 +119,12 @@ img.save('abalone-classes.gif', format='GIF')
 plt.show()
 
 """
-Which metric is more appropriate to use to evaluate the performance?
+- Which metric is more appropriate to use to evaluate the performance?
 We can see in the plots that the penguin dataset is more imbalanced
 than the abalone one, so we will take this into consideration to measure the 
 performance. 
+We will also consider that this is a classification task.
+The metrics are the following:
 
 ACCURACY: Accuracy is the most straightforward metric,
 but it can be misleading, especially for imbalanced datasets.
