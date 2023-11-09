@@ -120,6 +120,9 @@ plt.show()
 
 """
 Which metric is more appropriate to use to evaluate the performance?
+We can see in the plots that the penguin dataset is more imbalanced
+than the abalone one, so we will take this into consideration to measure the 
+performance. 
 
 ACCURACY: Accuracy is the most straightforward metric,
 but it can be misleading, especially for imbalanced datasets.
@@ -128,6 +131,10 @@ It's suitable for balanced datasets where classes have similar proportions.
 
 PRECISION: Precision focuses on the ratio of correctly predicted positive observations to the total predicted
 positive observations. It is suitable when the cost of false positives is high.
+
+ROC-AUC (Receiver Operating Characteristic - Area Under Curve): ROC-AUC measures the area under the ROC curve,
+which represents the true positive rate against the false positive rate. It is suitable for binary classification
+tasks, especially when dealing with imbalanced datasets.
 
 
 
