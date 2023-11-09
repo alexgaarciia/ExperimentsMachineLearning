@@ -130,9 +130,11 @@ ACCURACY: Accuracy is the most straightforward metric,
 but it can be misleading, especially for imbalanced datasets.
 It calculates the ratio of correctly predicted instances to the total instances.
 It's suitable for balanced datasets where classes have similar proportions.
+- Formula: No. of correct predictions / Total no. of observations
 
 PRECISION: Precision focuses on the ratio of correctly predicted positive observations to the total predicted
 positive observations. It is suitable when the cost of false positives is high.
+- Formula: TP/(TP + FP)
 
 RECALL (Sensitivity or True Positive Rate): Recall calculates the ratio of correctly
 predicted positive observations to all the actual positives. It is suitable when the cost
