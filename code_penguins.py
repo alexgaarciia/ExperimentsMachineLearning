@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
-from code import models_run
+from code import base_dt, top_dt, base_mlp, top_mlp, compute_metrics, print_info, print_info2
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 
@@ -138,14 +138,43 @@ X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone = train_test_sp
 # EXERCISE 4, 5
 ########################################################################################################################
 # Run the model for the penguin dataset:
-penguin_file = FileOutput('penguin-performance.txt')
-models_run(1, X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
-penguin_file.close()
+# Call classifiers:
+base_dt_class = base_dt(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+top_dt_class = top_dt(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+base_mlp_class = base_mlp(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+top_mlp_class = top_mlp(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+
+# Compute metrics:
+base_dt_metrics = compute_metrics(base_dt_class[0], X_test_penguin, y_test_penguin)
+top_dt_metrics = compute_metrics(top_dt_class[0], X_test_penguin, y_test_penguin)
+base_mlp_metrics = compute_metrics(base_mlp_class[0], X_test_penguin, y_test_penguin)
+top_mlp_metrics = compute_metrics(top_mlp_class[0], X_test_penguin, y_test_penguin)
+
+# Print information:
+print_info(base_dt_class[3], base_dt_metrics[0], base_dt_metrics[1], base_dt_metrics[2], base_dt_metrics[3], base_dt_metrics[4])
+print_info(top_dt_class[3], top_dt_metrics[0], top_dt_metrics[1], top_dt_metrics[2], top_dt_metrics[3], top_dt_metrics[4])
+print_info(base_mlp_class[3], base_mlp_metrics[0], base_mlp_metrics[1], base_mlp_metrics[2], base_mlp_metrics[3], base_mlp_metrics[4])
+print_info(top_mlp_class[3], top_mlp_metrics[0], top_mlp_metrics[1], top_mlp_metrics[2], top_mlp_metrics[3], top_mlp_metrics[4])
+
 
 # Run the model for the abalone dataset:
-#abalone_file = FileOutput('abalone-performance.txt')
-#models_run(1, X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
-#abalone_file.close()
+# Call classifiers:
+base_dt_class = base_dt(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+top_dt_class = top_dt(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+base_mlp_class = base_mlp(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+top_mlp_class = top_mlp(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+
+# Compute metrics:
+base_dt_metrics = compute_metrics(base_dt_class[0], X_test_penguin, y_test_penguin)
+top_dt_metrics = compute_metrics(top_dt_class[0], X_test_penguin, y_test_penguin)
+base_mlp_metrics = compute_metrics(base_mlp_class[0], X_test_penguin, y_test_penguin)
+top_mlp_metrics = compute_metrics(top_mlp_class[0], X_test_penguin, y_test_penguin)
+
+# Print information:
+print_info(base_dt_class[3], base_dt_metrics[0], base_dt_metrics[1], base_dt_metrics[2], base_dt_metrics[3], base_dt_metrics[4])
+print_info(top_dt_class[3], top_dt_metrics[0], top_dt_metrics[1], top_dt_metrics[2], top_dt_metrics[3], top_dt_metrics[4])
+print_info(base_mlp_class[3], base_mlp_metrics[0], base_mlp_metrics[1], base_mlp_metrics[2], base_mlp_metrics[3], base_mlp_metrics[4])
+print_info(top_mlp_class[3], top_mlp_metrics[0], top_mlp_metrics[1], top_mlp_metrics[2], top_mlp_metrics[3], top_mlp_metrics[4])
 
 
 ########################################################################################################################
@@ -153,11 +182,97 @@ penguin_file.close()
 ########################################################################################################################
 # Run the model for the penguin dataset:
 penguin_file_ex6 = FileOutput('penguin-performance-5times.txt')
-models_run(5, X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+
+# Dictionary to store values of each iteration:
+performance_metrics = {
+    'Base-DT': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
+    'Top-DT': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
+    'Base-MLP': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
+    'Top-MLP': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []}
+}
+
+for i in range(5):
+    # Call classifiers:
+    base_dt_class = base_dt(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+    top_dt_class = top_dt(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+    base_mlp_class = base_mlp(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+    top_mlp_class = top_mlp(X_penguin, X_train_penguin, X_test_penguin, y_train_penguin, y_test_penguin)
+
+    # Compute metrics:
+    base_dt_metrics = compute_metrics(base_dt_class[0], X_test_penguin, y_test_penguin)
+    top_dt_metrics = compute_metrics(top_dt_class[0], X_test_penguin, y_test_penguin)
+    base_mlp_metrics = compute_metrics(base_mlp_class[0], X_test_penguin, y_test_penguin)
+    top_mlp_metrics = compute_metrics(top_mlp_class[0], X_test_penguin, y_test_penguin)
+
+    # Store information:
+    # Append the current scores to the respective lists in the dictionary
+    performance_metrics["Base-DT"]['accuracies'].append(base_dt_metrics[2])
+    performance_metrics["Base-DT"]['macro_f1s'].append(top_dt_metrics[3])
+    performance_metrics["Base-DT"]['weighted_f1s'].append(top_dt_metrics[4])
+
+    performance_metrics["Top-DT"]['accuracies'].append(base_dt_metrics[2])
+    performance_metrics["Top-DT"]['macro_f1s'].append(base_dt_metrics[2])
+    performance_metrics["Top-DT"]['weighted_f1s'].append(base_dt_metrics[4])
+
+    performance_metrics["Base-MLP"]['accuracies'].append(base_mlp_metrics[2])
+    performance_metrics["Base-MLP"]['macro_f1s'].append(base_mlp_metrics[3])
+    performance_metrics["Base-MLP"]['weighted_f1s'].append(base_mlp_metrics[4])
+
+    performance_metrics["Top-MLP"]['accuracies'].append(top_mlp_metrics[2])
+    performance_metrics["Top-MLP"]['macro_f1s'].append(top_mlp_metrics[3])
+    performance_metrics["Top-MLP"]['weighted_f1s'].append(top_mlp_metrics[4])
+
+for model in performance_metrics:
+    metrics = performance_metrics[model]
+    print_info2(model, metrics)
+
 penguin_file_ex6.close()
 
-# Run the model for the abalone dataset:
-#abalone_file_ex6 = FileOutput('abalone-performance-5times.txt')
-#models_run(5, X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
-#abalone_file_ex6.close()
 
+# Run the model for the abalone dataset:
+abalone_file_ex6 = FileOutput('abalone-performance-5times.txt')
+
+# Dictionary to store values of each iteration:
+performance_metrics = {
+    'Base-DT': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
+    'Top-DT': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
+    'Base-MLP': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
+    'Top-MLP': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []}
+}
+
+for i in range(5):
+    # Call classifiers:
+    base_dt_class = base_dt(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+    top_dt_class = top_dt(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+    base_mlp_class = base_mlp(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+    top_mlp_class = top_mlp(X_abalone, X_train_abalone, X_test_abalone, y_train_abalone, y_test_abalone)
+
+    # Compute metrics:
+    base_dt_metrics = compute_metrics(base_dt_class[0], X_test_abalone, y_test_abalone)
+    top_dt_metrics = compute_metrics(top_dt_class[0], X_test_abalone, y_test_abalone)
+    base_mlp_metrics = compute_metrics(base_mlp_class[0], X_test_abalone, y_test_abalone)
+    top_mlp_metrics = compute_metrics(top_mlp_class[0], X_test_abalone, y_test_abaloney)
+
+    # Store information:
+    # Append the current scores to the respective lists in the dictionary
+    performance_metrics["Base-DT"]['accuracies'].append(base_dt_metrics[2])
+    performance_metrics["Base-DT"]['macro_f1s'].append(top_dt_metrics[3])
+    performance_metrics["Base-DT"]['weighted_f1s'].append(top_dt_metrics[4])
+
+    performance_metrics["Top-DT"]['accuracies'].append(base_dt_metrics[2])
+    performance_metrics["Top-DT"]['macro_f1s'].append(base_dt_metrics[2])
+    performance_metrics["Top-DT"]['weighted_f1s'].append(base_dt_metrics[4])
+
+    performance_metrics["Base-MLP"]['accuracies'].append(base_mlp_metrics[2])
+    performance_metrics["Base-MLP"]['macro_f1s'].append(base_mlp_metrics[3])
+    performance_metrics["Base-MLP"]['weighted_f1s'].append(base_mlp_metrics[4])
+
+    performance_metrics["Top-MLP"]['accuracies'].append(top_mlp_metrics[2])
+    performance_metrics["Top-MLP"]['macro_f1s'].append(top_mlp_metrics[3])
+    performance_metrics["Top-MLP"]['weighted_f1s'].append(top_mlp_metrics[4])
+
+for model in performance_metrics:
+    metrics = performance_metrics[model]
+    print_info2(model, metrics)
+
+abalone_file_ex6.close()
