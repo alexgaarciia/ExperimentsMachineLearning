@@ -134,6 +134,11 @@ It's suitable for balanced datasets where classes have similar proportions.
 PRECISION: Precision focuses on the ratio of correctly predicted positive observations to the total predicted
 positive observations. It is suitable when the cost of false positives is high.
 
+RECALL (Sensitivity or True Positive Rate): Recall calculates the ratio of correctly
+predicted positive observations to all the actual positives. It is suitable when the cost
+of false negatives is high.
+- Formula: TP/(TP + FN)
+
 ROC-AUC (Receiver Operating Characteristic - Area Under Curve): ROC-AUC measures the area under the ROC curve,
 which represents the true positive rate against the false positive rate. It is suitable for binary classification
 tasks, especially when dealing with imbalanced datasets.
@@ -141,6 +146,7 @@ tasks, especially when dealing with imbalanced datasets.
 F1-Score: F1-score is the harmonic mean of precision and recall. It is a balance between precision and recall
 and is suitable when there is an uneven class distribution.
 - Formula: F1 − Score = 2 × (Precision+Recall)/(Precision×Recall)
+
 
 """
 ########################################################################################################################
