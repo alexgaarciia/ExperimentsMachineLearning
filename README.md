@@ -18,6 +18,7 @@
 # Project A1 - Penguins & Abalone
 - Datasets: Penguins and Abalone datasets.
 
+- Main tasks:
 1. Load datasets and divide into train and test, see if balanced.
 2. Train and test classifiers:
    - Decision Tree with default parameters.
@@ -26,3 +27,7 @@
    - Previous MLP but experimenting with the activation functions, architecture and solver.
 3. Statistics of the previous classifiers: confusion matrix, recall, F1 (these three for the classes) and accuracy, macro-average/weighted-average/variation F1  (for the model).
 4. Analysis of performance.
+
+- Files:
+1. main: Contains the solution to all the exercises proposed in the instructions.
+2. functions: Contains all the classifiers and functions to (a)compute some metrics, (b)print information, and (c)evaluate all the models.
