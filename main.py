@@ -60,7 +60,8 @@ penguin_data['island'] = penguin_data['island'].map(island_mapping)
 penguin_data['sex'] = penguin_data['sex'].map(sex_mapping)
 
 
-# 1B)
+# 1B) Abalone dataset can be as it is, as it only contains float types and one variable ('rings')
+# whose type is an integer
 abalone_data_types = abalone_data.dtypes
 print(abalone_data_types)
 
