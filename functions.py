@@ -1,10 +1,10 @@
 # Import necessary libraries/modules
-import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, f1_score
+import matplotlib.pyplot as plt
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeClassifier, plot_tree
-from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, f1_score
 
 
 # Function used to compute metrics
