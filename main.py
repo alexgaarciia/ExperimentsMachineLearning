@@ -69,9 +69,10 @@ print(abalone_data_types)
 # EXERCISE 2
 ########################################################################################################################
 # PENGUIN DATASET:
-# Assuming the target in 'penguin_data' is 'species'
+# Assuming the target in 'penguin_data' is 'species':
 class_counts = penguin_data['species'].value_counts(normalize=True) * 100
 
+# Plot the percentage of the instances in each output class
 plt.figure(figsize=(8, 6))
 class_counts.plot(kind='bar', color='skyblue')
 plt.xlabel('Species')
@@ -95,6 +96,7 @@ plt.show()
 # Assuming the target in 'abalone_data' is 'Type'
 class_counts = abalone_data['Type'].value_counts(normalize=True) * 100
 
+# Plot the percentage of the instances in each output class
 plt.figure(figsize=(8, 6))
 class_counts.plot(kind='bar', color='lavender')
 plt.xlabel('Type')
@@ -145,9 +147,9 @@ tasks, especially when dealing with imbalanced datasets.
 4. F1-Score: F1-score is the harmonic mean of precision and recall. It is a balance between precision and recall
 and is suitable when there is an uneven class distribution.
 - Formula: F1 − Score = 2 × (Precision+Recall)/(Precision×Recall)
-
-
 """
+
+
 ########################################################################################################################
 # EXERCISE 3
 ########################################################################################################################
