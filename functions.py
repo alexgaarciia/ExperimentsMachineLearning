@@ -108,7 +108,7 @@ def base_mlp(X, X_train, X_test, y_train, y_test):
 def top_mlp(X, X_train, X_test, y_train, y_test):
     # (d) Top_MLP
     param_grid_mlp = {
-        'activation': ['sigmoid', 'tanh', 'relu'],
+        'activation': ['logistic', 'tanh', 'relu'],
         'hidden_layer_sizes': [(100, 100), (10, 10, 10), (30, 50)],
         'solver': ['adam', 'sgd']
     }
