@@ -21,11 +21,6 @@ class FileOutput:
             self.file.write(text)
             self.stdout.write(text)
 
-    def flush(self):
-        if not self.suppress_output:
-            self.file.flush()
-            self.stdout.flush()
-
     def close(self):
         sys.stdout = self.stdout
         self.file.close()
@@ -43,7 +38,7 @@ abalone_data = pd.read_csv('./abalone.csv')
 # Drop first category to avoid the 'dummy variable trap'
 encoder = OneHotEncoder(sparse_output=False, drop='first')
 
-# The fit_transform method fits the encoder to the specified columns and transforms the data simultaneously.
+# The 'fit_transform' method fits the encoder to the specified columns and transforms the data simultaneously
 encoded_island_sex = encoder.fit_transform(penguin_data[['island', 'sex']])
 
 # The resulting sparse matrix is transformed to a DataFrame
@@ -60,7 +55,7 @@ penguin_data_encoded_1hot.drop(['island', 'sex'], axis=1, inplace=True)
 island_mapping = {'Biscoe': 0, 'Dream': 1, 'Torgersen': 2}
 sex_mapping = {'FEMALE': 0, 'MALE': 1}
 
-# Now, penguin_data contains 'island' and 'sex' features in numerical format based on manual categorization.
+# Now, penguin_data contains 'island' and 'sex' features in numerical format based on manual categorization
 penguin_data['island'] = penguin_data['island'].map(island_mapping)
 penguin_data['sex'] = penguin_data['sex'].map(sex_mapping)
 
@@ -148,9 +143,9 @@ tasks, especially when dealing with imbalanced datasets.
 F1-Score: F1-score is the harmonic mean of precision and recall. It is a balance between precision and recall
 and is suitable when there is an uneven class distribution.
 - Formula: F1 − Score = 2 × (Precision+Recall)/(Precision×Recall)
-
-
 """
+
+
 ########################################################################################################################
 # EXERCISE 3
 ########################################################################################################################
