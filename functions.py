@@ -9,7 +9,7 @@ from sklearn.neural_network import MLPClassifier
 
 # Function used to compute metrics
 def compute_metrics(classifier, X_test, y_test):
-    """This is a function that, given a classifier and the test sets, returns a full metrics' report"""
+    """This is a function that, given a classifier and the test sets, returns a full metrics report"""
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     report = classification_report(y_test, y_pred, zero_division=0)
@@ -34,8 +34,9 @@ def print_info(model_name, cm, report, accuracy, macro_f1, weighted_f1):
 
 def print_info2(model_name, metrics):
     """This function is mainly used to print the average, variance and standard deviation of the accuracy,
-    macro_f1 and weighted_f1 of a classifier that are run multiple times"""
-    # Compute avg, var, std
+    macro_f1 and weighted_f1 of a classifier that is run multiple times"""
+
+    # Compute avg, var, std of accuracy, macro_f1 and weighted f1
     accuracy_avg = np.mean(metrics['accuracies'])
     accuracy_var = np.var(metrics['accuracies'])
     accuracy_std = np.std(metrics['accuracies'])
@@ -56,7 +57,7 @@ def print_info2(model_name, metrics):
 # Design classifiers
 def base_dt(X, X_train, X_test, y_train, y_test):
     # (a) Base-DT
-    base_dt_classifier = DecisionTreeClassifier(random_state=42)
+    base_dt_classifier = DecisionTreeClassifier()
     base_dt_classifier.fit(X_train, y_train)
 
     # Visualize the Decision Tree graphically
@@ -65,6 +66,7 @@ def base_dt(X, X_train, X_test, y_train, y_test):
     plt.title("Base-DT Classifier")
     plt.show()
 
+    # Return information needed to compute metrics/show information of training and testing
     return base_dt_classifier, X_test, y_test, "Base-DT"
 
 
@@ -79,6 +81,7 @@ def top_dt(X, X_train, X_test, y_train, y_test):
     grid_search_DT = GridSearchCV(default_dt_classifier, param_grid)
     grid_search_DT.fit(X_train, y_train)
 
+    # Get the best parameters and the best classifier
     top_dt_best_param = grid_search_DT.best_params_
     top_dt_classifier = grid_search_DT.best_estimator_
 
@@ -89,6 +92,7 @@ def top_dt(X, X_train, X_test, y_train, y_test):
     plt.title("Top-DT Classifier")
     plt.show()
 
+    # Return information needed to compute metrics/show information of training and testing
     return top_dt_classifier, X_test, y_test, 'Top-DT with best parameters' + str(top_dt_best_param)
 
 
@@ -97,13 +101,14 @@ def base_mlp(X, X_train, X_test, y_train, y_test):
     base_MLP = MLPClassifier(hidden_layer_sizes=(100, 100), activation='logistic', solver='sgd')
     base_MLP.fit(X_train, y_train)
 
+    # Return information needed to compute metrics/show information of training and testing
     return base_MLP, X_test, y_test, 'Base-MLP'
 
 
 def top_mlp(X, X_train, X_test, y_train, y_test):
     # (d) Top_MLP
     param_grid_mlp = {
-        'activation': ['logistic', 'tanh', 'relu'],
+        'activation': ['sigmoid', 'tanh', 'relu'],
         'hidden_layer_sizes': [(100, 100), (10, 10, 10), (30, 50)],
         'solver': ['adam', 'sgd']
     }
@@ -111,15 +116,18 @@ def top_mlp(X, X_train, X_test, y_train, y_test):
     grid_search_MLP = GridSearchCV(default_MLP, param_grid_mlp)
     grid_search_MLP.fit(X_train, y_train)
 
+    # Get the best parameters and the best classifier
     top_mlp_best_param = grid_search_MLP.best_params_
     top_mlp_classifier = grid_search_MLP.best_estimator_
 
+    # Return information needed to compute metrics/show information of training and testing
     return top_mlp_classifier, X_test, y_test, 'Top-MLP with best parameters' + str(top_mlp_best_param)
 
 
 # Code to run the models a certain number of iterations
 def evaluate_models(X, X_train, X_test, y_train, y_test, num_iterations):
     """The main goal of this function is invoking all the classifiers"""
+
     # Declare a dictionary that will allow us to store useful information of each classifier
     performance_metrics = {
         'Base-DT': {'accuracies': [], 'macro_f1s': [], 'weighted_f1s': []},
