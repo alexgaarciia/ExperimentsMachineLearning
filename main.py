@@ -21,11 +21,6 @@ class FileOutput:
             self.file.write(text)
             self.stdout.write(text)
 
-    def flush(self):
-        if not self.suppress_output:
-            self.file.flush()
-            self.stdout.flush()
-
     def close(self):
         sys.stdout = self.stdout
         self.file.close()
@@ -43,7 +38,7 @@ abalone_data = pd.read_csv('./abalone.csv')
 # Drop first category to avoid the 'dummy variable trap'
 encoder = OneHotEncoder(sparse_output=False, drop='first')
 
-# The fit_transform method fits the encoder to the specified columns and transforms the data simultaneously.
+# The "fit_transform" method fits the encoder to the specified columns and transforms the data simultaneously
 encoded_island_sex = encoder.fit_transform(penguin_data[['island', 'sex']])
 
 # The resulting sparse matrix is transformed to a DataFrame
