@@ -112,7 +112,7 @@ def top_mlp(X, X_train, X_test, y_train, y_test):
         'hidden_layer_sizes': [(100, 100), (10, 10, 10), (30, 50)],
         'solver': ['adam', 'sgd']
     }
-    default_MLP = MLPClassifier(max_iter=1500)
+    default_MLP = MLPClassifier()
     grid_search_MLP = GridSearchCV(default_MLP, param_grid_mlp)
     grid_search_MLP.fit(X_train, y_train)
 
