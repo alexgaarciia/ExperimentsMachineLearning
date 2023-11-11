@@ -28,10 +28,8 @@
 3. Statistics of the previous classifiers: confusion matrix, recall, F1 (these three for the classes) and accuracy, macro-average/weighted-average/variation F1  (for the model).
 4. Analysis of performance.
 
-
 - Files:
 1. main: Contains the solution to all the exercises proposed in the instructions.
 2. functions: Contains all the classifiers and functions to (a)compute some metrics, (b)print information, and (c)evaluate all the models.
 
-
-- *Instructions*: run the "main" file to obtain all the plots and training/testing the classifiers.
+- **Instructions**: run the "main" file to obtain all the plots and training/testing the classifiers.
